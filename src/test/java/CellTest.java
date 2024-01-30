@@ -39,4 +39,21 @@ public class CellTest {
         testCell.setValue(2);
         Assertions.assertEquals(2, testCell.getValue(), "Cell's value didn't change.");
     }
+
+    @Test
+    public void testDisplay(){
+        Cell testCell = new Cell(1,1);
+        testCell.setStatus(0);
+        Assertions.assertEquals("[ ]", testCell.display(), "Empty cell displayed incorrectly.");
+        testCell.setStatus(2);
+        Assertions.assertEquals("\u001B[32m[F]\u001B[0m", testCell.display(), "Incorrect flag cell displayed incorrectly.");
+        testCell.setStatus(4);
+        Assertions.assertEquals("\u001B[32m[F]\u001B[0m", testCell.display(), "Correct flag cell displayed incorrectly");
+        testCell.setStatus(1);
+        testCell.setValue(1);
+        testCell.discoverCell();
+        Assertions.assertEquals("[1]", testCell.display(), "Number cell displayed incorrectly.");
+        testCell.setStatus(3);
+        Assertions.assertEquals("\u001B[31m[*]\u001B[0m", testCell.display(), "Bomb correct cell displayed incorrectly");
+    }
 }

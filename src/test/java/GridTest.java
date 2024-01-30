@@ -10,7 +10,7 @@ public class GridTest {
     @Test
     public void testPlayability(){
         GameLogic game = new GameLogic();
-        Map grid = game.startCustomGame(5,5,5);
+        Map grid = game.startGame(5,5,5);
         Assertions.assertTrue(grid.isPlayable(),"5x5 with 5 bombs detected as unplayable.");
 
         GameLogic game2 = new GameLogic();
@@ -20,6 +20,10 @@ public class GridTest {
         GameLogic game3 = new GameLogic();
         Map grid3 = game3.startCustomGame(1,5,10);
         Assertions.assertFalse(grid3.isPlayable(),"1x5 with 10 bombs detected as playable.");
+
+        GameLogic game4 = new GameLogic();
+        Map grid4 = game4.startCustomGame(6,6,70);
+        Assertions.assertFalse(grid4.isPlayable(),"6x6 with 70 bombs detected as playable.");
     }
 
     @Test
@@ -27,10 +31,12 @@ public class GridTest {
         GameLogic game = new GameLogic();
         Map grid = game.startCustomGame(5,5,5);
         Assertions.assertEquals(25, grid.getMap().size(),"Grid 5x5 doesn't have 25 cells.");
+        Assertions.assertEquals(25, grid.getToDecideFate().size(),"Grid 5x5 doesn't have 25 cells.");
 
         GameLogic game2 = new GameLogic();
         Map grid2 = game2.startCustomGame(10,10,5);
         Assertions.assertEquals(100, grid2.getMap().size(),"Grid 10x10 doesn't have 100 cells.");
+        Assertions.assertEquals(100, grid2.getToDecideFate().size(),"Grid 10x10 doesn't have 100 cells.");
     }
 
     @Test
@@ -52,10 +58,13 @@ public class GridTest {
         Map grid = game.startCustomGame(5,5,5);
         Cell testcell = grid.chooseCell(1,1);
         testcell.setStatus(1);
+        Assertions.assertEquals(0, grid.getFlagCounter(), "Grid created with flags.");
         grid.flagCell(testcell);
         Assertions.assertEquals(2, testcell.getStatus(), "Number didn't get flagged.");
+        Assertions.assertEquals(1, grid.getFlagCounter(), "Flag didn't get counted.");
         grid.flagCell(testcell);
         Assertions.assertEquals(1, testcell.getStatus(), "Number didn't get unflagged.");
+        Assertions.assertEquals(0, grid.getFlagCounter(), "Flag didn't get removed.");
 
         testcell.setStatus(3);
         grid.flagCell(testcell);
@@ -118,6 +127,18 @@ public class GridTest {
         Cell testCell2 = grid.chooseCell(1,2);
         grid.guess(testCell2);
         Assertions.assertFalse(testCell.getIsCovered(), "Guessed cell not revealed.");
+
+        GameLogic game2 = new GameLogic();
+        Map grid2 = game2.startCustomGame(5,5,10);
+        Cell testCell3 = grid2.chooseCell(3,3);
+        Cell testCell4 = grid2.chooseCell(3,4);
+        testCell4.setStatus(1);
+        testCell3.setValue(1);
+        testCell3.setStatus(1);
+        testCell3.setValue(0);
+        grid2.guess(testCell3);
+
+        Assertions.assertFalse(testCell4.getIsCovered(), "Neighbour of 0 not revealed.");
     }
 
     @Test
@@ -128,4 +149,16 @@ public class GridTest {
         grid.spawnBombs(24,testCell);
         Assertions.assertEquals(8,testCell.getValue(), "Incorrect number of nearby bombs displayed.");
     }
+
+    @Test
+    public void testInput(){
+        GameLogic game = new GameLogic();
+        int x = game.checkInt("1");
+        Assertions.assertEquals(1, x, "Input 1 didn't turn into integer.");
+
+        x = game.checkInt("test");
+        Assertions.assertEquals(0, x, "Input test turned into integer different than 0.");
+
+    }
+
 }

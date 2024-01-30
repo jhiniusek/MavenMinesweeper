@@ -121,22 +121,22 @@ public class Map {
             switch(x.getStatus()){
                 case 1:{
                     x.setStatus(2);
-                    flagCounter--;
+                    flagCounter++;
                     break;
                 }
                 case 2:{
                     x.setStatus(1);
-                    flagCounter++;
+                    flagCounter--;
                     break;
                 }
                 case 3:{
                     x.setStatus(4);
-                    flagCounter--;
+                    flagCounter++;
                     break;
                 }
                 case 4:{
                     x.setStatus(3);
-                    flagCounter++;
+                    flagCounter--;
                     break;
                 }
             }
