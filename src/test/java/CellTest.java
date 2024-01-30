@@ -2,16 +2,17 @@ import org.example.src.*;
 import org.junit.jupiter.api.*;
 
 public class CellTest {
-    Cell testCell = new Cell(1, 1);
     @Test
     public void testCellConstructor(){
-        Assertions.assertTrue(testCell.getIsCovered(), "Cell got created as revealed.");
-        Assertions.assertEquals(0, testCell.getStatus(), "Cell got created with existing status.");
-        Assertions.assertEquals(0, testCell.getValue(), "Cell detected neighbouring bombs before they spawn.");
+        Cell testCellJacocoPLS = new Cell(1, 1);
+        Assertions.assertTrue(testCellJacocoPLS.getIsCovered(), "Cell got created as revealed.");
+        Assertions.assertEquals(0, testCellJacocoPLS.getStatus(), "Cell got created with existing status.");
+        Assertions.assertEquals(0, testCellJacocoPLS.getValue(), "Cell detected neighbouring bombs before they spawn.");
     }
 
     @Test
     public void testCellRevealing(){
+        Cell testCell = new Cell(1, 1);
         Assertions.assertTrue(testCell.getIsCovered(), "Cell got created as revealed.");
         testCell.discoverCell();
         Assertions.assertFalse(testCell.getIsCovered(), "Cell didn't reveal.");
@@ -19,6 +20,7 @@ public class CellTest {
 
     @Test
     public void testCellStatus(){
+        Cell testCell = new Cell(1, 1);
         Assertions.assertEquals(0, testCell.getStatus(), "Cell got created with existing status.");
         testCell.setStatus(1);
         Assertions.assertEquals(1, testCell.getStatus(), "Cell didn't become a number.");
@@ -32,6 +34,7 @@ public class CellTest {
 
     @Test
     public void testCellValue(){
+        Cell testCell = new Cell(1, 1);
         Assertions.assertEquals(0, testCell.getValue(), "Cell detected neighbouring bombs before they spawn.");
         testCell.setValue(2);
         Assertions.assertEquals(2, testCell.getValue(), "Cell's value didn't change.");
