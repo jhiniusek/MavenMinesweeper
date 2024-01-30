@@ -1,7 +1,5 @@
-import org.example.src.Cell;
+import org.example.src.*;
 import org.junit.jupiter.api.*;
-
-import java.nio.channels.AsynchronousServerSocketChannel;
 
 public class CellTest {
     Cell testCell = new Cell(1, 1);

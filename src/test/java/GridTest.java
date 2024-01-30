@@ -1,6 +1,4 @@
-import org.example.src.Cell;
-import org.example.src.Map;
-import org.example.src.GameLogic;
+import org.example.src.*;
 import org.junit.jupiter.api.*;
 
 import java.lang.reflect.Array;
